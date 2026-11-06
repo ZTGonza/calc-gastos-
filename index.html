@@ -1,0 +1,33 @@
+<!-- Documento HTML base que proporciona el nodo donde React monta la aplicación. -->
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#15191e" />
+    <!-- Evita un destello del tema equivocado antes de que React monte la aplicación. -->
+    <script>
+      (() => {
+        try {
+          const preference = localStorage.getItem("calc-gastos-theme");
+          const systemDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
+          const theme = preference === "light" || preference === "dark"
+            ? preference
+            : systemDark ? "dark" : "light";
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.dataset.themePreference = preference || "system";
+        } catch {
+          document.documentElement.dataset.theme = "dark";
+          document.documentElement.dataset.themePreference = "system";
+        }
+      })();
+    </script>
+    <meta name="description" content="Calc-Gastos: registra tus ingresos, controla tus gastos y consulta tus finanzas personales en pesos colombianos." />
+    <title>Calc-Gastos 2.0 | Finanzas personales</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

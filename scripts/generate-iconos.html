@@ -1,0 +1,30 @@
+<!-- Herramienta auxiliar para generar/visualizar los iconos estáticos del proyecto. -->
+<!DOCTYPE html>
+<html>
+<head><title>Generar Iconos PWA</title></head>
+<body>
+  <canvas id="canvas" width="512" height="512"></canvas>
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Fondo
+    ctx.fillStyle = '#0a0a0f';
+    ctx.beginPath();
+    ctx.roundRect(0, 0, 512, 512, 80);
+    ctx.fill();
+    
+    // Texto
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 200px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText('💰', 256, 280);
+    
+    // Descargar
+    canvas.toBlob(blob => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); 
+      a.download = 'pwa-512x512.png';
+      a.click();
+    });
+  </script>

@@ -1,0 +1,166 @@
+/*
+ * SISTEMA VISUAL GLOBAL DE CALC-GASTOS
+ *
+ * Los componentes conservan clases de utilidad para estructura y espaciado. Las
+ * clases cromáticas existentes se conectan aquí con tokens semánticos. De este modo
+ * un solo cambio en data-theme actualiza los cinco módulos sin duplicar estilos.
+ */
+@import "tailwindcss";
+
+/* -------------------------------------------------------------------------- */
+/* 1. TOKENS COMPARTIDOS Y TEMA OSCURO (predeterminado)                        */
+/* -------------------------------------------------------------------------- */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --app-bg: #15191e;
+  --surface: #222a31;
+  --surface-raised: #29343d;
+  --surface-deep: #101418;
+  --surface-hover: #303b44;
+  --border: #35414a;
+  --text-primary: #e5e7eb;
+  --text-secondary: #cbd5d1;
+  --text-muted: #9ca3af;
+  --text-subtle: #77838c;
+  --brand: #10b981;
+  --brand-hover: #34d399;
+  --brand-soft: rgba(16, 185, 129, 0.12);
+  --brand-contrast: #052e24;
+  --income: #10b981;
+  --expense: #ef6464;
+  --warning: #f59e0b;
+  --info: #60a5fa;
+  --chart-text: #9ca3af;
+  --chart-grid: rgba(156, 163, 175, 0.14);
+  --sans: Inter, ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+  --heading: Inter, ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font-family: var(--sans);
+  color: var(--text-primary);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 2. TEMA CLARO                                                               */
+/* -------------------------------------------------------------------------- */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --app-bg: #f5f7f6;
+  --surface: #ffffff;
+  --surface-raised: #f0f4f2;
+  --surface-deep: #e9efec;
+  --surface-hover: #e5ece8;
+  --border: #e1e8e4;
+  --text-primary: #18221d;
+  --text-secondary: #34443b;
+  --text-muted: #64736a;
+  --text-subtle: #7b8780;
+  --brand: #059669;
+  --brand-hover: #047857;
+  --brand-soft: rgba(5, 150, 105, 0.09);
+  --brand-contrast: #ffffff;
+  --income: #07865f;
+  --expense: #d94848;
+  --warning: #a16207;
+  --info: #2563eb;
+  --chart-text: #64736a;
+  --chart-grid: rgba(100, 115, 106, 0.16);
+}
+
+/* -------------------------------------------------------------------------- */
+/* 3. BASE DEL DOCUMENTO                                                       */
+/* -------------------------------------------------------------------------- */
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-height: 100svh;
+  overflow-x: hidden;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  background: var(--app-bg);
+  color: var(--text-primary);
+  font-family: var(--sans);
+  transition: background-color 180ms ease, color 180ms ease;
+}
+#root { min-height: 100svh; width: 100%; }
+*, *::before, *::after { box-sizing: border-box; }
+h1, h2, h3, h4, h5, h6 { margin-bottom: 20px; color: var(--text-primary); font-family: var(--heading); }
+p { margin: 0; color: inherit; }
+code, pre { font-family: var(--mono); }
+img, svg { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 32px; }
+h2 { font-size: 24px; }
+@media (max-width: 375px) { h1 { font-size: 28px; } h2 { font-size: 20px; } }
+@media (min-width: 769px) { h1 { font-size: 48px; } h2 { font-size: 28px; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+}
+
+/* -------------------------------------------------------------------------- */
+/* 4. ADAPTADORES DE CLASES DE COLOR                                           */
+/*    Mantienen compatibles los componentes actuales mientras los conectan    */
+/*    al sistema semántico de tokens.                                          */
+/* -------------------------------------------------------------------------- */
+[class~="bg-neutral-950"] { background-color: var(--app-bg) !important; }
+[class~="bg-slate-950"] { background-color: var(--surface-deep) !important; }
+[class~="bg-slate-950/70"] { background-color: color-mix(in srgb, var(--surface-deep) 70%, transparent) !important; }
+[class~="bg-slate-950/60"] { background-color: color-mix(in srgb, var(--surface-deep) 60%, transparent) !important; }
+[class~="bg-slate-900"],
+[class~="bg-slate-900/80"],
+[class~="bg-slate-900/90"] { background-color: var(--surface) !important; }
+[class~="border-slate-800"],
+[class~="border-slate-700"],
+[class~="border-slate-600"],
+[class~="divide-slate-800"] { border-color: var(--border) !important; }
+[class~="text-white"],
+[class~="text-slate-200"] { color: var(--text-primary) !important; }
+[class~="text-slate-300"] { color: var(--text-secondary) !important; }
+[class~="text-slate-400"] { color: var(--text-muted) !important; }
+[class~="text-slate-500"],
+[class~="text-slate-600"] { color: var(--text-subtle) !important; }
+[class~="hover:bg-slate-800"]:hover { background-color: var(--surface-hover) !important; }
+
+/* Verde de marca: botones, navegación activa, enlaces y focos. */
+[class~="bg-emerald-500"] { background-color: var(--brand) !important; }
+[class~="hover:bg-emerald-400"]:hover,
+[class~="hover:bg-emerald-500"]:hover { background-color: var(--brand-hover) !important; }
+[class~="bg-emerald-500/10"],
+[class~="bg-emerald-400/10"] { background-color: var(--brand-soft) !important; }
+[class~="text-emerald-300"],
+[class~="text-emerald-400"] { color: var(--income) !important; }
+[class~="border-emerald-500/30"] { border-color: color-mix(in srgb, var(--income) 35%, transparent) !important; }
+[class~="border-emerald-500"] { border-color: var(--brand) !important; }
+[class~="focus:border-emerald-500"]:focus { border-color: var(--brand) !important; }
+[class~="ring-emerald-400"] { --tw-ring-color: var(--brand) !important; }
+
+/* Rojo siempre identifica egresos y acciones destructivas. */
+[class~="text-rose-300"],
+[class~="text-rose-400"],
+[class~="text-red-400"] { color: var(--expense) !important; }
+[class~="bg-rose-500/10"],
+[class~="bg-rose-400/10"] { background-color: color-mix(in srgb, var(--expense) 10%, transparent) !important; }
+[class~="border-rose-500/30"] { border-color: color-mix(in srgb, var(--expense) 35%, transparent) !important; }
+[class~="hover:text-rose-200"]:hover,
+[class~="hover:text-rose-300"]:hover { color: var(--expense) !important; }
+
+/* Advertencias e información conservan un significado independiente de la marca. */
+[class~="text-amber-200"] { color: var(--warning) !important; }
+[class~="border-amber-500/20"] { border-color: color-mix(in srgb, var(--warning) 25%, transparent) !important; }
+[class~="bg-amber-500/5"] { background-color: color-mix(in srgb, var(--warning) 5%, transparent) !important; }
+[class~="bg-emerald-600"] { background-color: var(--brand) !important; }
+[class~="hover:bg-emerald-700"]:hover { background-color: var(--brand-hover) !important; }
+
+/* El bloque de bienvenida usa el mismo lenguaje de superficies que el resto. */
+[class~="from-emerald-500/10"] { --tw-gradient-from: var(--brand-soft) var(--tw-gradient-from-position) !important; }
+[class~="to-slate-900"] { --tw-gradient-to: var(--surface) var(--tw-gradient-to-position) !important; }
